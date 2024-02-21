@@ -1,6 +1,7 @@
 <template>
     <HomeHeader />
-    <HomeServices/>
+    <HomeServices />
+    <HomeForm />
 </template>
 
 <script lang="ts" setup></script>
