@@ -1,0 +1,49 @@
+:root {
+    --main: #05cc84;
+}
+
+a {
+    cursor: pointer;
+}
+
+textarea {
+    resize: none;
+}
+
+.mainbtn {
+    background-color: var(--main);
+    color: white;
+    padding: 12px 16px 12px 16px;
+    border-radius: 32px;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    -ms-border-radius: 32px;
+    -o-border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.secondbtn {
+    background-color: transparent;
+    color: var(--main);
+    padding: 12px 16px 12px 16px;
+    border-radius: 32px;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    -ms-border-radius: 32px;
+    -o-border-radius: 32px;
+    border: 1px solid var(--main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.secondbtn:hover {
+    background-color: var(--main);
+    color: white;
+    border: 1px solid var(--main);
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+}
