@@ -1,10 +1,10 @@
 <template>
-    <footer class="mt-auto bg-b">
+    <footer class="mt-auto bg-secondary">
         <div class="container py-24 text-white">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="space-y-9">
-                    <NuxtLink to="/#main"><img width="200" src="/assets/images/footer/footerlogo.png" alt="" /></NuxtLink>
-                    <div class="social flex justify-start items-center">
+                <div class="space-y-9 w-full flex flex-col items-center lg:block">
+                    <NuxtLink to="/"><img width="200" src="/footerlogo.png" alt="" /></NuxtLink>
+                    <div class="flex justify-start items-center">
                         <a href="" class="ml-3"><nuxt-icon class="text-3xl" name="footer/Facebook" filled /></a>
                         <a href="" class="ml-3"><nuxt-icon class="text-3xl" name="footer/YouTube" filled /></a>
                         <a href="" class="ml-3"><nuxt-icon class="text-3xl" name="footer/Instagram" filled /></a>
@@ -12,8 +12,8 @@
                     </div>
                 </div>
 
-                <div>
-                    <h2 class="font-medium leading-7 text-lg mb-5 text-main">روابط سريعه</h2>
+                <div class="w-full flex flex-col items-center lg:block">
+                    <h2 class="font-medium leading-7 text-lg mb-5 text-primary">روابط سريعه</h2>
                     <ul>
                         <li class="mb-3">
                             <NuxtLink>سيايه الخصوصيه</NuxtLink>
@@ -23,24 +23,23 @@
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <ul>
-                        <li class="mb-3">
-                            <NuxtLink class="font-medium leading-7 text-lg text-main">الرئيسيه</NuxtLink>
-                        </li>
-                        <li class="mb-3">
-                            <NuxtLink>تواصل معنا</NuxtLink>
-                        </li>
-                        <li class="mb-3">
-                            <NuxtLink>خدماتنا</NuxtLink>
-                        </li>
-                        <li class="mb-3">
-                            <NuxtLink>انضم الينا</NuxtLink>
-                        </li>
-                    </ul>
-                </div>
-                <div class="w-full space-y-5">
-                    <h2 class="font-medium leading-7 text-lg mb-5 text-main">تواصل معنا</h2>
+
+                <ul class="w-full flex flex-col items-center lg:block">
+                    <li class="mb-3">
+                        <NuxtLink to="/" class="font-medium leading-7 text-lg text-primary">الرئيسيه</NuxtLink>
+                    </li>
+                    <li class="mb-3">
+                        <NuxtLink to="/contact">تواصل معنا</NuxtLink>
+                    </li>
+                    <li class="mb-3">
+                        <NuxtLink to="/services">خدماتنا</NuxtLink>
+                    </li>
+                    <li class="mb-3">
+                        <NuxtLink to="/join">انضم الينا</NuxtLink>
+                    </li>
+                </ul>
+                <div class="w-full space-y-5 flex flex-col items-center lg:block">
+                    <h2 class="font-medium leading-7 text-lg mb-5 text-primary">تواصل معنا</h2>
                     <p>+966 8768 978</p>
                     <p>shamsupport@gmail.com</p>
                 </div>
@@ -54,4 +53,8 @@
 
 <script setup></script>
 
-<style></style>
+<style scoped>
+a:hover {
+    @apply text-primary transition-all duration-200;
+}
+</style>

@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
     modules: [
         "nuxt-headlessui",
+        "nuxt-headlessui",
         [
             "@vee-validate/nuxt",
             {
@@ -49,7 +50,7 @@ export default defineNuxtConfig({
         ],
     ],
     plugins: ["~/plugins/i18n.client.ts"],
-    css: ["~/assets/css/main.css"],
+    css: ["~/assets/css/main.scss"],
     postcss: {
         plugins: {
             tailwindcss: {},

@@ -1,13 +1,11 @@
 <template>
-  <div>
-    
-  </div>
+    <Merchantlog
+        title="تسجيل الدخول كتاجر"
+        subTitle="قم بتسجيل الدخول الآن للاستفادة من خدماتنا الحصرية وتتبع شحناتك بكل سهولة وأمان. نحن هنا لجعل رحلتك معنا أكثر راحة وشفافية"
+    />
+    <MerchantlogForm :merchant="true" />
 </template>
 
-<script lang="ts" setup>
+<script setup></script>
 
-</script>
-
-<style>
-
-</style>
+<style></style>

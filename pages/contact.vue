@@ -1,13 +1,8 @@
 <template>
-  <div>
-    
-  </div>
+    <Contact />
+    <ContactForm />
 </template>
 
-<script lang="ts" setup>
+<script setup></script>
 
-</script>
-
-<style>
-
-</style>
+<style></style>

@@ -1,6 +1,6 @@
 <template>
     <HomeHeader />
-    <HomeServices />
+    <HomeServices :home="true" />
     <HomeForm />
 </template>
 

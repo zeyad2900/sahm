@@ -12,13 +12,16 @@ export default {
     content: ["./components/**/*.{js,vue,ts}", "./layouts/**/*.vue", "./pages/**/*.vue", "./plugins/**/*.{js,ts}", "./app.vue", "./error.vue"],
     theme: {
         colors: {
-            main: "#05CC84",
+            primary: "#05CC84",
             white: colors.white,
-            text: colors.black,
+            black: "colors.balck",
+            text: "#212323",
             stroke: "#F5FDFA",
             tan: "#4D4F50",
             light: "#7F8D94",
-            b: "#154855",
+            secondary: "#154855",
+            trans: colors.transparent,
+            danger: "#ef4444",
         },
         screens: {
             xs: "475px",

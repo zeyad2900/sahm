@@ -1,13 +1,8 @@
 <template>
-  <div>
-    
-  </div>
+    <Join />
+    <JoinForm />
 </template>
 
-<script lang="ts" setup>
+<script setup></script>
 
-</script>
-
-<style>
-
-</style>
+<style></style>

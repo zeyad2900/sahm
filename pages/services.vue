@@ -1,13 +1,8 @@
 <template>
-  <div>
-    
-  </div>
+    <Services />
+    <HomeServices :home="false" />
 </template>
 
-<script lang="ts" setup>
+<script setup></script>
 
-</script>
-
-<style>
-
-</style>
+<style></style>
