@@ -2,18 +2,18 @@
     <header class="absolute top-0 flex items-center justify-center start-0 w-full z-[1000] h-[150px] bg-transparent text-white">
         <div class="container flex items-center justify-between">
             <!-- logo -->
-            <NuxtLink to="/">
+            <NuxtLink :to="localePath('/')">
                 <nuxt-icon class="text-[130px]" name="header/logo" filled />
             </NuxtLink>
             <!-- llinks -->
             <ul class="links hidden lg:flex items-center justify-center gap-10">
-                <NuxtLink to="/" class="hover:text-primary">الرئيسيه</NuxtLink>
-                <NuxtLink to="/contact" class="hover:text-primary">تواصل معنا</NuxtLink>
-                <NuxtLink to="/services" class="hover:text-primary">الخدمات</NuxtLink>
-                <NuxtLink to="/join" class="hover:text-primary">انضم الينا</NuxtLink>
+                <NuxtLink :to="localePath('/')" class="hover:text-primary">{{ $t("NAV.home") }}</NuxtLink>
+                <NuxtLink :to="localePath('/contact')" class="hover:text-primary">{{ $t("NAV.contactUs") }}</NuxtLink>
+                <NuxtLink :to="localePath('/services')" class="hover:text-primary">{{ $t("NAV.services") }}</NuxtLink>
+                <NuxtLink :to="localePath('/join')" class="hover:text-primary">{{ $t("NAV.join") }}</NuxtLink>
             </ul>
             <!-- small header -->
-            <div v-if="smallHeader" class="w-screen h-screen z-50 top-0 right-0 fixed bg-[#202926e7] flex items-center justify-center">
+            <div v-if="smallHeader" class="w-screen h-screen z-50 top-0 right-0 fixed bg-[#202926e7] flex flex-col items-center justify-center gap-2">
                 <div class="links flex flex-col items-center gap-5 relative w-full">
                     <button
                         @click="
@@ -21,25 +21,29 @@
                                 smallHeader = false;
                             }
                         "
-                        class="absolute top-[-50%] start-[20%]"
+                        class="absolute top-[-50px] start-[20%]"
                     >
                         <Icon name="ic:baseline-close" class="text-3xl" />
                     </button>
-                    <NuxtLink to="/" class="hover:text-primary">الرئيسيه</NuxtLink>
-                    <NuxtLink to="/contact" class="hover:text-primary">تواصل معنا</NuxtLink>
-                    <NuxtLink to="/services" class="hover:text-primary">الخدمات</NuxtLink>
-                    <NuxtLink to="/join" class="hover:text-primary">انضم الينا</NuxtLink>
+                    <NuxtLink :to="localePath('/')" class="hover:text-primary">{{ $t("NAV.home") }}</NuxtLink>
+                    <NuxtLink :to="localePath('/contact')" class="hover:text-primary">{{ $t("NAV.contactUs") }}</NuxtLink>
+                    <NuxtLink :to="localePath('/services')" class="hover:text-primary">{{ $t("NAV.services") }}</NuxtLink>
+                    <NuxtLink :to="localePath('/join')" class="hover:text-primary">{{ $t("NAV.join") }}</NuxtLink>
                     <button @click="changeLang" type="button" class="flex items-center gap-1">
-                        EN
+                        {{ $t("NAV.lang") }}
                         <nuxt-icon class="text-[25px] mt-1 p-0" name="header/earth" />
                     </button>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <NuxtLink :to="localePath('/merchant')" class="mainbtn">{{ $t("NAV.merchant") }}</NuxtLink>
+                    <NuxtLink :to="localePath('/user')" class="secondbtn">{{ $t("NAV.user") }}</NuxtLink>
                 </div>
             </div>
             <!-- buttons -->
             <div class="flex items-center gap-2 xl:gap-7">
                 <div class="gap-4 hidden lg:flex">
-                    <NuxtLink to="/merchant" class="mainbtn">تسجيل كتاجر</NuxtLink>
-                    <NuxtLink to="/user" class="secondbtn">انشاء حساب</NuxtLink>
+                    <NuxtLink :to="localePath('/merchant')" class="mainbtn">{{ $t("NAV.merchant") }}</NuxtLink>
+                    <NuxtLink :to="localePath('/user')" class="secondbtn">{{ $t("NAV.user") }}</NuxtLink>
                 </div>
                 <!-- small header button -->
                 <button
@@ -53,8 +57,8 @@
                     <Icon name="nimbus:menu" class="" />
                 </button>
                 <!-- lang button -->
-                <button @click="changeLang" type="button" class="hidden lg:flex items-center gap-1">
-                    EN
+                <button @click="changeLang" class="hidden lg:flex items-center gap-1">
+                    {{ $t("NAV.lang") }}
                     <nuxt-icon class="text-[25px] mt-1 p-0" name="header/earth" />
                 </button>
             </div>
@@ -63,11 +67,12 @@
 </template>
 
 <script setup>
+const localePath = useLocalePath();
+const { locale, setLocale } = useI18n();
 const smallHeader = ref(false);
 
-const { locale, setLocale } = useI18n();
 const changeLang = () => {
-    const newLocale = locale.value === "en" ? "ar" : "en"; // Example toggle between 'en' and 'fr'
+    const newLocale = locale.value === "en" ? "ar" : "en";
     setLocale(newLocale);
 };
 </script>
@@ -86,7 +91,7 @@ const changeLang = () => {
     display: block;
     position: absolute;
     bottom: -3px;
-    right: 0;
+    inset-inline-start: 0;
     width: 0;
     height: 3px;
     transition: all 0.3s ease-in-out;

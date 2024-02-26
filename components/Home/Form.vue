@@ -1,10 +1,10 @@
 <template>
     <section class="relative bg-[url('/form.png')] bg-cover bg-no-repeat flex items-center justify-center lg:py-0 py-6 min-h-[80vh]">
-        <dir class="container min-h-[600px] grid grid-cols-2 gap-8">
+        <div class="container min-h-[600px] grid grid-cols-2 gap-8 z-[2]">
             <div class="w-full max-w-[442px] flex flex-col justify-center text-white gap-9 col-span-2 lg:col-span-1">
-                <h2 class="mainheader !text-white">تواصل معنا</h2>
+                <h2 class="mainheader !text-white">{{ $t("NAV.contactUs") }}</h2>
                 <p class="font-normal text-[16px] leading-7">
-                    نحن في انتظار تواصلكم! يرجى عدم التردد في الاتصال بنا عبر قسم التواصل لأي استفسار أو مساعدة تحتاجونها، ففريق خدمة العملاء لدينا مستعد لمساعدتكم بكل اهتمام واحترافي .
+                    {{ $t("TITLES.homeformsubtitle") }}
                 </p>
                 <div class="flex items-center gap-3">
                     <div class="p-2 bg-light rounded-full">
@@ -21,43 +21,44 @@
             </div>
             <div class="col-span-2 lg:col-span-1">
                 <div class="relative min-h-full">
-                    <VeeForm :validation-schema="schema" @submit="handleSubmit" as="div">
-                        <form class="lg:absolute relative min-h-full w-full bg-white lg:top-[-14%] rounded-[24px] lg:p-12 py-20 px-8 flex flex-col gap-5">
+                    <VeeForm :validation-schema="schema" as="div">
+                        <form class="lg:absolute relative min-h-full w-full bg-white lg:top-[-12%] rounded-[24px] lg:p-12 py-20 px-8 flex flex-col gap-3">
                             <vee-field name="name" v-slot="{ field, meta }">
                                 <div class="maininput">
-                                    <input v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" placeholder="الاسم" type="text" />
+                                    <input v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" :placeholder="$t('INPUTS.name')" type="text" />
+                                    <VeeErrorMessage name="name" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                                 </div>
-                                <VeeErrorMessage name="name" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </vee-field>
                             <VeeField name="phone" v-slot="{ field, meta }">
                                 <div class="countreyinput" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''">
                                     <GlobaleHeadlessBtn />
-                                    <input v-bind="field" placeholder="رقم الجوال" type="text" />
+                                    <input v-bind="field" :placeholder="$t('INPUTS.phone')" type="text" />
                                 </div>
                                 <VeeErrorMessage name="phone" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
                             <VeeField name="email" v-slot="{ field, meta }">
                                 <div class="maininput">
-                                    <input v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" placeholder="الايميل" type="text" />
+                                    <input v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" :placeholder="$t('INPUTS.email')" type="text" />
+                                    <VeeErrorMessage name="email" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                                 </div>
-                                <VeeErrorMessage name="email" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
                             <VeeField name="subject" v-slot="{ field, meta }">
                                 <div class="maininput">
-                                    <textarea v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" placeholder="الموضوع" type="text" />
+                                    <textarea v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" :placeholder="$t('INPUTS.subject')" type="text" />
+                                    <VeeErrorMessage name="subject" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                                 </div>
-                                <VeeErrorMessage name="subject" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
                             <button class="mainbtn ms-auto !px-[31px]">ارسال</button>
                         </form>
                     </VeeForm>
                 </div>
             </div>
-        </dir>
+        </div>
     </section>
 </template>
 
 <script setup>
+const i18n = useI18n();
 import { configure } from "vee-validate";
 import * as yup from "yup";
 
@@ -69,14 +70,18 @@ configure({
 });
 
 const schema = yup.object().shape({
-    name: yup.string().required(),
-    phone: yup.string().required().min(9, "phone min less"),
+    name: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.name") })),
+    phone: yup
+        .string()
+        .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
+        .min(9, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone") })),
     email: yup
         .string()
-        .required()
-        .test("email", "email required", (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
-    subject: yup.string().required(),
+        .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.email") }))
+        .test("email", i18n.t("ERROR.valid", { name: i18n.t("INPUTS.email") }), (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
+    subject: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.subject") })),
 });
 </script>
 
-<style></style>
+<style scoped>
+</style>

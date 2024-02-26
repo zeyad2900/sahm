@@ -3,7 +3,7 @@
         <div class="container py-24 text-white">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="space-y-9 w-full flex flex-col items-center lg:block">
-                    <NuxtLink to="/"><img width="200" src="/footerlogo.png" alt="" /></NuxtLink>
+                    <NuxtLink :to="localePath('/')"><img width="200" src="/footerlogo.png" alt="" /></NuxtLink>
                     <div class="flex justify-start items-center">
                         <a href="" class="ml-3"><nuxt-icon class="text-3xl" name="footer/Facebook" filled /></a>
                         <a href="" class="ml-3"><nuxt-icon class="text-3xl" name="footer/YouTube" filled /></a>
@@ -12,46 +12,48 @@
                     </div>
                 </div>
 
-                <div class="w-full flex flex-col items-center lg:block">
-                    <h2 class="font-medium leading-7 text-lg mb-5 text-primary">روابط سريعه</h2>
+                <div class="w-full flex flex-col items-center lg:block text-center lg:text-start">
+                    <h2 class="font-medium leading-7 text-lg mb-5 text-primary">{{ $t("FOOTER.fastlink") }}</h2>
                     <ul>
                         <li class="mb-3">
-                            <NuxtLink>سيايه الخصوصيه</NuxtLink>
+                            <NuxtLink>{{ $t("FOOTER.policy") }}</NuxtLink>
                         </li>
                         <li class="mb-3">
-                            <NuxtLink>الشروط والاحكام</NuxtLink>
+                            <NuxtLink>{{ $t("FOOTER.terms") }}</NuxtLink>
                         </li>
                     </ul>
                 </div>
 
                 <ul class="w-full flex flex-col items-center lg:block">
                     <li class="mb-3">
-                        <NuxtLink to="/" class="font-medium leading-7 text-lg text-primary">الرئيسيه</NuxtLink>
+                        <NuxtLink :to="localePath('/')" class="font-medium leading-7 text-lg text-primary">{{ $t("NAV.home") }}</NuxtLink>
                     </li>
                     <li class="mb-3">
-                        <NuxtLink to="/contact">تواصل معنا</NuxtLink>
+                        <NuxtLink :to="localePath('/contact')">{{ $t("NAV.contactUs") }}</NuxtLink>
                     </li>
                     <li class="mb-3">
-                        <NuxtLink to="/services">خدماتنا</NuxtLink>
+                        <NuxtLink :to="localePath('/services')">{{ $t("NAV.services") }}</NuxtLink>
                     </li>
                     <li class="mb-3">
-                        <NuxtLink to="/join">انضم الينا</NuxtLink>
+                        <NuxtLink :to="localePath('/join')">{{ $t("NAV.join") }}</NuxtLink>
                     </li>
                 </ul>
                 <div class="w-full space-y-5 flex flex-col items-center lg:block">
-                    <h2 class="font-medium leading-7 text-lg mb-5 text-primary">تواصل معنا</h2>
+                    <h2 class="font-medium leading-7 text-lg mb-5 text-primary">{{ $t("NAV.contactUs") }}</h2>
                     <p>+966 8768 978</p>
                     <p>shamsupport@gmail.com</p>
                 </div>
             </div>
         </div>
         <div class="bg-white py-2 text-text">
-            <p class="text-center font-semibold text-[16px]">حقوق النشر © 2024. جميع الحقوق محفوظة</p>
+            <p class="text-center font-semibold text-[16px]">{{ $t("FOOTER.smallnav") }}</p>
         </div>
     </footer>
 </template>
 
-<script setup></script>
+<script setup>
+const localePath = useLocalePath();
+</script>
 
 <style scoped>
 a:hover {

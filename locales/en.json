@@ -1,35 +1,78 @@
 {
-    "nav": {
-        "lang": "EN",
-        "home": "الرئيسيه",
-        "services": "الخدمات",
-        "aboutuUs": "من نحن",
-        "contactUs": "تواصل معنا"
+    "NAV": {
+        "lang": "AR",
+        "home": "Home",
+        "services": "Services",
+        "join": "Join us",
+        "contactUs": "Contact us",
+        "merchant": "Register as a trader",
+        "user": "Create an account"
     },
-    "footer": {
-        "main": "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى",
-        "doYouHaveQuestions": "هل لديك أسئلة",
-        "QuickAccess": "الوصول السريع",
-        "OurServices": "خدماتنا",
-        "RequestAservice": "اطلب خدمة",
-        "AboutOurSite": "حول موقعنا",
-        "aboutuUs": "من نحن",
-        "contactUs": "تواصل معنا",
-        "termsCndConditions": "الشروط والاحكام",
-        "privacyPolicy": "سياسه الخصوصيه",
-        "end": "جميع الحقوق محفوظة - موقع كشف تسريبات"
+    "FOOTER": {
+        "fastlink": "Quick links",
+        "policy": "Privacy policy",
+        "terms": "Terms and Conditions",
+        "smallnav": "Copyright © 2024. All rights reserved"
     },
-    "main": {
-        "welcomeToOurWebsite": "مرحبًا بكم في موقعنا الخاص بخدمات كشف العوازل وتسريب المياه",
-        "WeCareAboutMeeting": "نهتم بتلبية احتياجاتكم. سواء كنتم تحتاجون إلى إصلاح أو تركيب أنابيب الماء أو الصرف الصحي",
-        "ourServices": "خدماتنا",
-        "chooseTheService": "إختر الخدمة اللتي تناسب طلبك و دع الامر لخبرائنا",
-        "tellUs": "إختر الخدمة و اخبرنا عن مشكلتك و سوف نرسل لك الفني المناسب في اسرع وقت",
-        "leakDetection": "فني كشف تسريبات",
-        "insulationInspection": "فني كشف عوازل"
+    "TITLES": {
+        "maintitle": "{name}Track your shipment now!",
+        "mainsubtitle": "Enter your shipment tracking number to track your order",
+        "searchholder": "Enter your shipment tracking number",
+        "searchbtn": "verification",
+        "homeformsubtitle": "We are waiting for your communication! Please do not hesitate to contact us through the contact section for any inquiry or assistance you need, as our customer service team is ready to assist you with all care and professionalism.",
+        "contactsubtitle": "Please do not hesitate to contact us through the communication department for any inquiry or assistance you need, our customer service team is ready to help you",
+        "servicessubtitle": "We offer superior services including speed and security, as we provide accurate tracking of shipments and distinguished customer service that ensures your complete satisfaction",
+        "merchanttitle": "Sign in as a merchant",
+        "merchansubtitle": "Log in now to take advantage of our exclusive services and track your shipments with ease and security. We are here to make your journey with us more comfortable and transparent",
+        "joinsubtitle": "You can now join our team if you are looking for an environment that encourages continuous development and professional excellence.",
+        "merchantformtitle": "Welcome back",
+        "userformtitle": "Welcome",
+        "usertitle": "Create account",
+        "usersubtitle": "Create an account now to take advantage of our exclusive services and track your shipments with ease and security. We are here to make your journey with us more comfortable and transparent"
     },
-    "ERRORS": {
-        "emailRequired": "البريد الإلكتروني مطلوب",
-        "emailInValid": "البريد الإلكتروني غير صحيح"
+    "SERVICES": {
+        "bay": "Payment upon receipt",
+        "baysubtitle": "We provide customers with added convenience when completing online purchases",
+        "box": "Storage",
+        "boxsubtitle": "Securing materials and goods in a way that ensures easy access and maintaining their quality",
+        "fast": "Fast delivery",
+        "fastsubtitle": "Optimize shipping and distribution processes to place orders quickly and in the shortest possible time",
+        "shild": "Insurance on shipments",
+        "shildsubtitle": "We provide protection for logistics operations from potential risks, such as loss or damage during transport",
+        "follow": "Track shipments",
+        "followsubtitle": "We aim to provide a comprehensive view of the location and status of the shipment during the transport process",
+        "cover": "The packaging",
+        "coversubtitle": "Design packaging in a way that minimizes the risk of damage or breakage during transportation",
+        "location": "Shipping to all regions of the Kingdom",
+        "locationsubtitle": "This service covers all geographical regions in the Kingdom, ranging from large cities to remote areas",
+        "callcenter": "24/7 customer service",
+        "callcentersubtitle": "Provides continuous support and assistance to customers around the clock, ensuring that their needs are met",
+        "rebay": "The returned shipments",
+        "rebaysubtitle": "Refers to products or goods that have been returned to the seller or service provider after delivery to the customer"
+    },
+    "INPUTS": {
+        "name": "name",
+        "email": "email",
+        "phone": "phone number",
+        "subject": "subject",
+        "send": "Send",
+        "country": "country",
+        "city": "city",
+        "jop": "jop",
+        "cv": "biography",
+        "message": "message"
+    },
+    "LABELS": {
+        "name": "user name",
+        "shopname": "store Name",
+        "shopphone": "store Mobile Number",
+        "password": "password",
+        "repassword": "confirm password"
+    },
+    "ERROR": {
+        "isRequired": "{name} is a required field",
+        "passwordlength": "{name} must be at least 9 characters long",
+        "valid": "please enter a valid {name}",
+        "confirmpass": "please make sure to enter the password correctly"
     }
 }

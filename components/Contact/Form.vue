@@ -7,14 +7,14 @@
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
                             <vee-field name="name" v-slot="{ field, meta }">
                                 <div class="maininput">
-                                    <input v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" placeholder="الاسم" type="text" />
+                                    <input v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" :placeholder="$t('INPUTS.name')" type="text" />
                                 </div>
                                 <VeeErrorMessage name="name" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </vee-field>
 
                             <VeeField name="email" v-slot="{ field, meta }">
                                 <div class="maininput">
-                                    <input v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" placeholder="الايميل" type="text" />
+                                    <input v-bind="field" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" :placeholder="$t('INPUTS.email')" type="text" />
                                 </div>
                                 <VeeErrorMessage name="email" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
@@ -41,20 +41,26 @@
                             <VeeField name="phone" v-slot="{ field, meta }">
                                 <div class="countreyinput" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''">
                                     <GlobaleHeadlessBtn />
-                                    <input v-bind="field" placeholder="رقم الجوال" type="text" />
+                                    <input v-bind="field" :placeholder="$t('INPUTS.phone')" type="text" />
                                 </div>
                                 <VeeErrorMessage name="phone" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
 
                             <VeeField name="subject" v-slot="{ field, meta }">
                                 <div class="maininput">
-                                    <textarea v-bind="field" class="!h-[250px]" :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" placeholder="الموضوع" type="text" />
+                                    <textarea
+                                        v-bind="field"
+                                        class="!h-[250px]"
+                                        :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''"
+                                        :placeholder="$t('INPUTS.subject')"
+                                        type="text"
+                                    />
                                 </div>
                                 <VeeErrorMessage name="subject" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
                         </div>
                     </div>
-                    <button class="mainbtn ms-auto !px-[50px]">انشاء حساب</button>
+                    <button class="mainbtn ms-auto !px-[50px]">{{ $t("INPUTS.send") }}</button>
                 </form>
             </VeeForm>
         </div>
@@ -64,6 +70,7 @@
 <script setup>
 import { configure } from "vee-validate";
 import * as yup from "yup";
+const i18n = useI18n();
 
 configure({
     validateOnBlur: true,
@@ -73,13 +80,16 @@ configure({
 });
 
 const schema = yup.object().shape({
-    name: yup.string().required(),
-    phone: yup.string().required().min(9, "phone min less"),
+    name: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.name") })),
+    phone: yup
+        .string()
+        .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
+        .min(9, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone") })),
     email: yup
         .string()
-        .required()
-        .test("email", "email required", (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
-    subject: yup.string().required(),
+        .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.email") }))
+        .test("email", i18n.t("ERROR.valid", { name: i18n.t("INPUTS.email") }), (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
+    subject: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.subject") })),
 });
 </script>
 

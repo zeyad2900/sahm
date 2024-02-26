@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    devtools: { enabled: true },
+    devtools: { enabled: false },
+    css: ["~/assets/css/main.scss"],
     modules: [
         "nuxt-headlessui",
         "nuxt-headlessui",
@@ -49,12 +50,11 @@ export default defineNuxtConfig({
             },
         ],
     ],
-    plugins: ["~/plugins/i18n.client.ts"],
-    css: ["~/assets/css/main.scss"],
     postcss: {
         plugins: {
             tailwindcss: {},
             autoprefixer: {},
         },
     },
+    ssr: true,
 });
