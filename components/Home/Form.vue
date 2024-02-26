@@ -1,6 +1,6 @@
 <template>
     <section class="relative bg-[url('/form.png')] bg-cover bg-no-repeat flex items-center justify-center lg:py-0 py-6 min-h-[80vh]">
-        <div class="container min-h-[600px] grid grid-cols-2 gap-8 z-[2]">
+        <div class="container min-h-[600px] grid grid-cols-2 gap-8">
             <div class="w-full max-w-[442px] flex flex-col justify-center text-white gap-9 col-span-2 lg:col-span-1">
                 <h2 class="mainheader !text-white">{{ $t("NAV.contactUs") }}</h2>
                 <p class="font-normal text-[16px] leading-7">
