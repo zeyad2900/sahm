@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     modules: [
         "nuxt-headlessui",
         "nuxt-headlessui",
+        "@nuxt/image",
         [
             "@vee-validate/nuxt",
             {
@@ -54,6 +55,11 @@ export default defineNuxtConfig({
         plugins: {
             tailwindcss: {},
             autoprefixer: {},
+        },
+    },
+    runtimeConfig: {
+        public: {
+            baseURL: "https://sahm.phpv8.aait-d.com/api/website/",
         },
     },
     ssr: true,

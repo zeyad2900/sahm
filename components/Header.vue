@@ -1,5 +1,5 @@
 <template>
-    <header class="absolute top-0 flex items-center justify-center start-0 w-full z-[1000] h-[150px] bg-transparent text-white">
+    <header class="absolute top-0 flex items-center justify-center start-0 w-full z-[500] h-[150px] bg-transparent text-white">
         <div class="container flex items-center justify-between">
             <!-- logo -->
             <NuxtLink :to="localePath('/')">

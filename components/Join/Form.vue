@@ -1,7 +1,7 @@
 <template>
     <section class="container py-[42px]">
         <div class="bg-[#F7F8F8] p-10 rounded-[24px]">
-            <VeeForm :validation-schema="schema" as="div">
+            <VeeForm :validation-schema="schema" @submit="handleSubmit" as="div">
                 <form>
                     <div class="grid grid-cols-2 gap-[124px] mb-[50px]">
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
@@ -40,7 +40,7 @@
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                         </select>
-                                        <VeeErrorMessage name="country" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
+                                        <VeeErrorMessage name="country" v-if="meta.touched && !meta.valid" class="text-danger text-sm" as="span" />
                                     </div>
                                 </VeeField>
                                 <VeeField name="city" v-slot="{ field, meta }">
@@ -50,7 +50,7 @@
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                         </select>
-                                        <VeeErrorMessage name="city" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
+                                        <VeeErrorMessage name="city" v-if="meta.touched && !meta.valid" class="text-danger text-sm" as="span" />
                                     </div>
                                 </VeeField>
                             </div>
@@ -61,13 +61,16 @@
                                 </div>
                                 <VeeErrorMessage name="email" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
-                            <VeeField name="file" v-slot="{ field, meta }">
+
+                            <VeeField name="file" type="file" v-slot="{ field, meta }">
                                 <div class="maininput relative">
                                     <input type="text" :placeholder="$t('INPUTS.cv')" disabled :class="meta.touched && !meta.valid ? '!border-danger !text-danger' : ''" />
                                     <input class="hidden" id="file" type="file" v-bind="field" />
                                     <label for="file" class="absolute end-5 top-[19px] cursor-pointer">
                                         <nuxt-icon class="text-2xl" name="contact/file" filled />
                                     </label>
+
+                                    <VeeErrorMessage name="file" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                                 </div>
                             </VeeField>
                         </div>
@@ -78,7 +81,10 @@
                             <VeeErrorMessage name="message" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                         </div>
                     </VeeField>
-                    <button class="mainbtn ms-auto !px-[50px]">{{ $t("TITLES.usertitle") }}</button>
+                    <button :disabled="buttonLoading" :class="buttonLoading ? '!bg-[#05cc838d]' : '!bg-primary'" class="mainbtn ms-auto !px-[31px]">
+                        <span v-if="!buttonLoading">{{ $t("TITLES.usertitle") }}</span>
+                        <GlobaleButtonLoader v-if="buttonLoading" />
+                    </button>
                 </form>
             </VeeForm>
         </div>
@@ -88,6 +94,7 @@
 <script setup>
 const i18n = useI18n();
 import { configure } from "vee-validate";
+import { useToast } from "vue-toastification";
 import * as yup from "yup";
 
 configure({
@@ -113,6 +120,40 @@ const schema = yup.object().shape({
     city: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.city") })),
     file: yup.mixed().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.cv") })),
 });
+
+const toast = useToast();
+const buttonLoading = ref(false);
+const baseURL = useRuntimeConfig().public.baseURL;
+
+async function handleSubmit(values, actions) {
+    buttonLoading.value = true;
+    await $fetch(`${baseURL}join-to-us`, {
+        method: "POST",
+        body: {
+            job_id: values.jop,
+            country_id: values.country,
+            city_id: values.city,
+            full_name: values.name,
+            email: values.email,
+            phone_code: values.phone_code,
+            phone: values.phone,
+            content: values.subject,
+            cv: values.file,
+        },
+        headers: {
+            "Accept-Language": i18n.locale.value,
+        },
+    })
+        .then((res) => {
+            toast.success(res.message);
+            actions.resetForm();
+            buttonLoading.value = false;
+        })
+        .catch((e) => {
+            toast.error(e.message);
+            buttonLoading.value = false;
+        });
+}
 </script>
 
 <style scoped></style>

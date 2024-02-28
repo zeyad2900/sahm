@@ -10,18 +10,18 @@
                     <div class="p-2 bg-light rounded-full">
                         <nuxt-icon name="home/phone" filled />
                     </div>
-                    <p>+966 8768 978</p>
+                    <p>{{ number.value }}</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <div class="p-2 bg-light rounded-full">
                         <nuxt-icon name="home/mail" filled />
                     </div>
-                    <p>shamsupport@gmail.com</p>
+                    <p>{{ email.value }}</p>
                 </div>
             </div>
             <div class="col-span-2 lg:col-span-1">
                 <div class="relative min-h-full">
-                    <VeeForm :validation-schema="schema" as="div">
+                    <VeeForm :validation-schema="schema" @submit="handleSubmit" as="div">
                         <form class="lg:absolute relative min-h-full w-full bg-white lg:top-[-12%] rounded-[24px] lg:p-12 py-20 px-8 flex flex-col gap-3">
                             <vee-field name="name" v-slot="{ field, meta }">
                                 <div class="maininput">
@@ -48,7 +48,10 @@
                                     <VeeErrorMessage name="subject" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                                 </div>
                             </VeeField>
-                            <button class="mainbtn ms-auto !px-[31px]">ارسال</button>
+                            <button :disabled="buttonLoading" :class="buttonLoading ? '!bg-[#05cc838d]' : '!bg-primary'" class="mainbtn ms-auto !px-[31px]">
+                                <span v-if="!buttonLoading">{{ $t("INPUTS.send") }}</span>
+                                <GlobaleButtonLoader v-if="buttonLoading" />
+                            </button>
                         </form>
                     </VeeForm>
                 </div>
@@ -58,7 +61,21 @@
 </template>
 
 <script setup>
+const props = defineProps({
+    setting: {
+        required: true,
+    },
+});
+
+const number = props.setting.find((ele) => {
+    return ele.key === "phone";
+});
+const email = props.setting.find((ele) => {
+    return ele.key === "email";
+});
+
 const i18n = useI18n();
+import { useToast } from "vue-toastification";
 import { configure } from "vee-validate";
 import * as yup from "yup";
 
@@ -80,8 +97,40 @@ const schema = yup.object().shape({
         .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.email") }))
         .test("email", i18n.t("ERROR.valid", { name: i18n.t("INPUTS.email") }), (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
     subject: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.subject") })),
+    phone_code: yup.mixed(),
 });
+
+const toast = useToast();
+const buttonLoading = ref(false);
+const baseURL = useRuntimeConfig().public.baseURL;
+
+async function handleSubmit(values, actions) {
+    buttonLoading.value = true;
+
+    await $fetch(`${baseURL}contact-us`, {
+        method: "POST",
+        body: {
+            full_name: values.name,
+            email: values.email,
+            phone_code: values.phone_code,
+            phone: values.phone,
+            title: values.subject,
+            content: values.subject,
+        },
+        headers: {
+            "Accept-Language": i18n.locale.value,
+        },
+    })
+        .then((res) => {
+            toast.success(res.message);
+            actions.resetForm();
+            buttonLoading.value = false;
+        })
+        .catch((e) => {
+            toast.error(e.message);
+            buttonLoading.value = false;
+        });
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

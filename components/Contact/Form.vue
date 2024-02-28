@@ -1,7 +1,7 @@
 <template>
     <section class="container py-[42px]">
         <div class="bg-[#F7F8F8] p-10 rounded-[24px]">
-            <VeeForm :validation-schema="schema" as="div">
+            <VeeForm :validation-schema="schema" @submit="handleSubmit" as="div">
                 <form>
                     <div class="grid grid-cols-2 gap-[124px] mb-[50px]">
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
@@ -60,7 +60,10 @@
                             </VeeField>
                         </div>
                     </div>
-                    <button class="mainbtn ms-auto !px-[50px]">{{ $t("INPUTS.send") }}</button>
+                    <button :disabled="buttonLoading" :class="buttonLoading ? '!bg-[#05cc838d]' : '!bg-primary'" class="mainbtn ms-auto !px-[31px]">
+                        <span v-if="!buttonLoading">{{ $t("INPUTS.send") }}</span>
+                        <GlobaleButtonLoader v-if="buttonLoading" />
+                    </button>
                 </form>
             </VeeForm>
         </div>
@@ -70,6 +73,7 @@
 <script setup>
 import { configure } from "vee-validate";
 import * as yup from "yup";
+import { useToast } from "vue-toastification";
 const i18n = useI18n();
 
 configure({
@@ -90,7 +94,38 @@ const schema = yup.object().shape({
         .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.email") }))
         .test("email", i18n.t("ERROR.valid", { name: i18n.t("INPUTS.email") }), (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
     subject: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.subject") })),
+    phone_code: yup.mixed(),
 });
+
+const toast = useToast();
+const buttonLoading = ref(false);
+const baseURL = useRuntimeConfig().public.baseURL;
+async function handleSubmit(values, actions) {
+    buttonLoading.value = true;
+    await $fetch(`${baseURL}contact-us`, {
+        method: "POST",
+        body: {
+            full_name: values.name,
+            email: values.email,
+            phone_code: values.phone_code,
+            phone: values.phone,
+            title: values.subject,
+            content: values.subject,
+        },
+        headers: {
+            "Accept-Language": i18n.locale.value,
+        },
+    })
+        .then((res) => {
+            toast.success(res.message);
+            actions.resetForm()
+            buttonLoading.value = false;
+        })
+        .catch((e) => {
+            toast.error(e.message);
+            buttonLoading.value = false;
+        });
+}
 </script>
 
 <style></style>

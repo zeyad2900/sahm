@@ -15,7 +15,7 @@
         "smallnav": "Copyright © 2024. All rights reserved"
     },
     "TITLES": {
-        "maintitle": "{name}Track your shipment now!",
+        "maintitle": "Track your shipment now!",
         "mainsubtitle": "Enter your shipment tracking number to track your order",
         "searchholder": "Enter your shipment tracking number",
         "searchbtn": "verification",
