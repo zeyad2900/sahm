@@ -71,7 +71,7 @@
     },
     "ERROR": {
         "isRequired": "هذا الحقل مطلوب الرجاء إدخال {name}",
-        "passwordlength": "يجب أن يكون {name} على الأقل 9 أحرف",
+        "passwordlength": "يجب ان يكون {name} اكبر من {length} رقم ",
         "valid": "الرجاء إدخال {name} صحيح",
         "confirmpass": "الرجاء التأكد بإدخال كلمة المرور بشكل صحيح"
     }

@@ -3,7 +3,9 @@
         <div class="container py-24 text-white">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="space-y-9 w-full flex flex-col items-center lg:block">
-                    <NuxtLink :to="localePath('/')"><NuxtImg width="200" :src="footerlogo.value" placeholder="/footerlogo.png" /></NuxtLink>
+                    <NuxtLink :to="localePath('/')"><div class=" w-36">
+                        <NuxtImg class="w-full" :src="footerlogo.value" placeholder="/footerlogo.png" />
+                    </div></NuxtLink>
                     <div class="flex justify-start items-center">
                         <a :href="facebook.value" class="ml-3"><nuxt-icon class="text-3xl" name="footer/Facebook" filled /></a>
                         <a :href="youtube.value" class="ml-3"><nuxt-icon class="text-3xl" name="footer/YouTube" filled /></a>
@@ -15,11 +17,8 @@
                 <div class="w-full flex flex-col items-center lg:block text-center lg:text-start">
                     <h2 class="font-medium leading-7 text-lg mb-5 text-primary">{{ $t("FOOTER.fastlink") }}</h2>
                     <ul>
-                        <li class="mb-3">
-                            <NuxtLink>{{ $t("FOOTER.policy") }}</NuxtLink>
-                        </li>
-                        <li class="mb-3">
-                            <NuxtLink>{{ $t("FOOTER.terms") }}</NuxtLink>
+                        <li class="mb-3" v-for="item in arr" :key="item.id">
+                            <NuxtLink>{{ item.title }}</NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -78,6 +77,9 @@ const instagram = props.items.find((ele) => {
 const footerlogo = props.items.find((ele) => {
     return ele.key === "footer_logo";
 });
+
+const { data } = await useApi("pages");
+const arr = data?.value?.data.slice(0, 3);
 
 const localePath = useLocalePath();
 </script>

@@ -71,7 +71,7 @@
     },
     "ERROR": {
         "isRequired": "{name} is a required field",
-        "passwordlength": "{name} must be at least 9 characters long",
+        "passwordlength": "{name} must be more than {length} characters",
         "valid": "please enter a valid {name}",
         "confirmpass": "please make sure to enter the password correctly"
     }

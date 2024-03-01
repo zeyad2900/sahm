@@ -3,7 +3,9 @@
         <div class="container flex items-center justify-between">
             <!-- logo -->
             <NuxtLink :to="localePath('/')">
-                <nuxt-icon class="text-[130px]" name="header/logo" filled />
+                <div class="w-32">
+                    <NuxtImg :src="headerLogo.value" placeholder="/logo.png" class="w-full h-full" />
+                </div>
             </NuxtLink>
             <!-- llinks -->
             <ul class="links hidden lg:flex items-center justify-center gap-10">
@@ -67,6 +69,16 @@
 </template>
 
 <script setup>
+const props = defineProps({
+    items: {
+        required: true,
+    },
+});
+
+const headerLogo = props.items.find((ele) => {
+    return ele.key === "header_logo";
+});
+
 const localePath = useLocalePath();
 const { locale, setLocale } = useI18n();
 const smallHeader = ref(false);

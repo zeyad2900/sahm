@@ -2,11 +2,11 @@
     <section class="home_intro min-h-[85vh]">
         <div class="w-full h-full z-10 absolute">
             <div class="gradiant w-full h-full absolute"></div>
-            <nuxt-img format="webp" class="w-full h-full object-cover" src="/services.png" />
+            <nuxt-img format="webp" class="w-full h-full object-cover" src="/merchant.png" />
         </div>
         <div class="text-white flex flex-col items-center gap-7 w-[537px] px-5 mt-32 lg:px-0 z-10">
-            <h1 class="font-semibold text-3xl md:text-[50px]">{{ $t("NAV.services") }}</h1>
-            <p class="font-medium text-[15px] mb-10 text-center">{{ $t("TITLES.servicessubtitle") }}</p>
+            <h1 class="font-semibold text-3xl md:text-[50px]">{{ $t("TITLES.usertitle") }}</h1>
+            <p class="font-medium text-[15px] mb-10 text-center">{{ $t("TITLES.usersubtitle") }}</p>
         </div>
     </section>
 </template>

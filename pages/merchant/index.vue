@@ -1,6 +1,6 @@
 <template>
     <Merchantlog :title="$t('TITLES.merchanttitle')" :subTitle="$t('TITLES.merchansubtitle')" />
-    <MerchantlogForm :merchant="true" />
+    <MerchantlogForm />
 </template>
 
 <script setup>

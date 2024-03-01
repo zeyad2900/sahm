@@ -5,7 +5,7 @@
         <GlobaleLoader />
     </div>
     <div v-else-if="data">
-        <HomeHeader :items="data?.data?.slider" :setting="data?.data?.setting" />
+        <HomeHeader :items="data?.data?.slider"/>
         <HomeServices :home="true" />
         <HomeForm :setting="data?.data?.setting" />
     </div>

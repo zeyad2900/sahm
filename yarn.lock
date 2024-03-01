@@ -782,7 +782,7 @@
   optionalDependencies:
     ipx "^3.0.0"
 
-"@nuxt/kit@^3.0.0", "@nuxt/kit@^3.7.4", "@nuxt/kit@^3.8.2", "@nuxt/kit@^3.9.0", "@nuxt/kit@^3.9.1", "@nuxt/kit@^3.9.2", "@nuxt/kit@^3.9.3", "@nuxt/kit@3.10.2":
+"@nuxt/kit@^3.0.0", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.7.4", "@nuxt/kit@^3.8.2", "@nuxt/kit@^3.9.0", "@nuxt/kit@^3.9.1", "@nuxt/kit@^3.9.2", "@nuxt/kit@^3.9.3", "@nuxt/kit@3.10.2":
   version "3.10.2"
   resolved "https://registry.npmjs.org/@nuxt/kit/-/kit-3.10.2.tgz"
   integrity sha512-Bua7taY9CIm7HCTpHXqFyM1xlZkrUl6HOqWrkGjLLQg9eeWAdKT7ppT0iEMiGnb9f+5T0uL5Ec3TvuR5J8P9WA==
@@ -975,6 +975,14 @@
     "@parcel/watcher-win32-arm64" "2.4.0"
     "@parcel/watcher-win32-ia32" "2.4.0"
     "@parcel/watcher-win32-x64" "2.4.0"
+
+"@pinia/nuxt@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/@pinia/nuxt/-/nuxt-0.5.1.tgz"
+  integrity sha512-6wT6TqY81n+7/x3Yhf0yfaJVKkZU42AGqOR0T3+UvChcaOJhSma7OWPN64v+ptYlznat+fS1VTwNAcbi2lzHnw==
+  dependencies:
+    "@nuxt/kit" "^3.5.0"
+    pinia ">=2.1.7"
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
@@ -4499,6 +4507,14 @@ pify@^2.3.0:
   resolved "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
+pinia@^2.1.7, pinia@>=2.1.7:
+  version "2.1.7"
+  resolved "https://registry.npmjs.org/pinia/-/pinia-2.1.7.tgz"
+  integrity sha512-+C2AHFtcFqjPih0zpYuvof37SFxMQ7OEG2zV9jRI12i9BOy3YQVAHwdKtyyc8pDcDyIc33WCIsZaCFWU7WWxGQ==
+  dependencies:
+    "@vue/devtools-api" "^6.5.0"
+    vue-demi ">=0.14.5"
+
 pirates@^4.0.1:
   version "4.0.6"
   resolved "https://registry.npmjs.org/pirates/-/pirates-4.0.6.tgz"
@@ -6085,6 +6101,11 @@ vue-bundle-renderer@^2.0.0:
   dependencies:
     ufo "^1.2.0"
 
+vue-demi@>=0.14.5:
+  version "0.14.7"
+  resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.7.tgz"
+  integrity sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==
+
 vue-devtools-stub@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/vue-devtools-stub/-/vue-devtools-stub-0.1.0.tgz"
@@ -6111,7 +6132,7 @@ vue-toastification@^2.0.0-rc.5:
   resolved "https://registry.npmjs.org/vue-toastification/-/vue-toastification-2.0.0-rc.5.tgz"
   integrity sha512-q73e5jy6gucEO/U+P48hqX+/qyXDozAGmaGgLFm5tXX4wJBcVsnGp4e/iJqlm9xzHETYOilUuwOUje2Qg1JdwA==
 
-"vue@^2.7.0 || ^3.0.0", "vue@^2.7.0 || ^3.2.25", vue@^3.0.0, vue@^3.0.2, vue@^3.2.0, vue@^3.2.25, vue@^3.3.11, vue@^3.3.4, vue@^3.4.19, "vue@>=2.7 || >=3", vue@>=3, vue@3.4.19:
+"vue@^2.6.14 || ^3.3.0", "vue@^2.7.0 || ^3.0.0", "vue@^2.7.0 || ^3.2.25", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.2, vue@^3.2.0, vue@^3.2.25, vue@^3.3.11, vue@^3.3.4, vue@^3.4.19, "vue@>=2.7 || >=3", vue@>=3, vue@3.4.19:
   version "3.4.19"
   resolved "https://registry.npmjs.org/vue/-/vue-3.4.19.tgz"
   integrity sha512-W/7Fc9KUkajFU8dBeDluM4sRGc/aa4YJnOYck8dkjgZoXtVsn3OeTGni66FV1l3+nvPA7VBFYtPioaGKUmEADw==

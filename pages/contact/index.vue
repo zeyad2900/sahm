@@ -1,8 +1,10 @@
 <template>
     <Contact />
-    <ContactForm />
+    <ContactForm :items="data?.data" />
 </template>
 
-<script setup></script>
+<script setup>
+const { data } = await useApi("settings");
+</script>
 
 <style></style>
