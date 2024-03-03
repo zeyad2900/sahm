@@ -64,4 +64,5 @@ export default defineNuxtConfig({
         },
     },
     ssr: true,
+    spaLoadingTemplate: false,
 });

@@ -5,8 +5,8 @@
             <nuxt-img class="w-full h-full object-cover" format="webp" :src="items.image_path" placeholder="/layout.png" />
         </div>
         <div class="text-white flex flex-col items-center gap-7 w-full max-w-[537px] px-5 lg:px-0 z-10">
-            <h1 class="font-extrabold text-3xl md:text-[64px] text-center leading-[70px]">{{ items.title }}</h1>
-            <p class="font-semibold mb-10 text-center 2xl:text-[17px]">{{ items.desc }}</p>
+            <h1 class="font-extrabold text-3xl md:text-[64px] text-center leading-[70px] animate__animated animate__fadeInLeft">{{ items.title }}</h1>
+            <p class="font-semibold mb-10 text-center 2xl:text-[17px] animate__animated animate__fadeInRight">{{ items.desc }}</p>
             <form class="flex gap-2 w-full h-[59px]">
                 <input class="rounded-md w-full px-3 text-text focus:outline-none text-[12px] placeholder:text-tan" :placeholder="$t('TITLES.searchholder')" type="search" />
                 <button class="mainbtn !rounded-md !px-6 font-semibold">{{ $t("TITLES.searchbtn") }}</button>

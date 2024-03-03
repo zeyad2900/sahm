@@ -1,6 +1,6 @@
 <template>
     <div class="card relative rounded-[16px] flex flex-col items-center py-[56px] px-[75px] border overflow-hidden border-[#EEEFF3] cursor-pointer">
-        <NuxtImg format="webp" placeholder="/box.png" class="icon absolute end-[-200px] top-[100px] w-28" :src="img" />
+        <NuxtImg format="webp" placeholder="/box.png" class="icon absolute end-[-200px] top-[100px] w-36" :src="img" />
         <div class="p-[24px] rounded-full bg-stroke mb-6 z-50">
             <NuxtImg format="webp" class="w-[37px] h-full" :src="img" placeholder="/box.png" />
         </div>

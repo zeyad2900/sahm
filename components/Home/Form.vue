@@ -124,7 +124,6 @@ const buttonLoading = ref(false);
 const baseURL = useRuntimeConfig().public.baseURL;
 
 async function handleSubmit(values, actions) {
-    console.log(values);
     buttonLoading.value = true;
     await $fetch(`${baseURL}contact-us`, {
         method: "POST",

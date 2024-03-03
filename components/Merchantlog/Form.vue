@@ -149,7 +149,7 @@ async function handleSubmit(values, actions) {
     await $fetch(`${baseURL}contact-us`, {
         method: "POST",
         body: {
-            type: "user",
+            type: "trader",
             full_name: values.username,
             phone_code: values.phone_code,
             phone: values.phone,
