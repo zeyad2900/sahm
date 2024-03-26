@@ -1,8 +1,8 @@
 <template>
     <div class="card relative rounded-[16px] flex flex-col items-center py-[56px] px-[75px] border overflow-hidden border-[#EEEFF3] cursor-pointer">
-        <NuxtImg format="webp" placeholder="/box.png" class="icon absolute end-[-200px] top-[100px] w-36" :src="img" />
+        <NuxtImg format="webp" class="icon absolute end-[-50%] top-[30%] w-36" :src="img" alt="icon" />
         <div class="p-[24px] rounded-full bg-stroke mb-6 z-50">
-            <NuxtImg format="webp" class="w-[37px] h-full" :src="img" placeholder="/box.png" />
+            <NuxtImg format="webp" class="w-[37px] h-full" :src="img" alt="icon" />
         </div>
         <div class="flex flex-col items-center gap-2">
             <h3 class="font-semibold text-text text-[24px] text-center z-50">{{ title }}</h3>
@@ -25,7 +25,7 @@ const props = defineProps({
 });
 </script>
 
-<style csoped>
+<style lang="scss" scoped>
 .card {
     transition: all 1.5s;
 }

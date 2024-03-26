@@ -28,6 +28,10 @@
         "merchantformtitle": "Welcome back",
         "userformtitle": "Welcome",
         "usertitle": "Create account",
+        "delivery number": "delivery number",
+        "comments": "comments",
+        "locationsm": "location",
+        "date": "date",
         "usersubtitle": "Create an account now to take advantage of our exclusive services and track your shipments with ease and security. We are here to make your journey with us more comfortable and transparent"
     },
     "SERVICES": {
@@ -59,7 +63,7 @@
         "country": "country",
         "city": "city",
         "jop": "jop",
-        "cv": "biography",
+        "cv": "CV",
         "message": "message"
     },
     "LABELS": {

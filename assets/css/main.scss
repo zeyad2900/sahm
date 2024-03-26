@@ -1,19 +1,16 @@
 @import "animate.css";
 
-$main-color: #05cc84;
-
 ::-webkit-scrollbar {
-    width: 3px;
-    height: 8px;
+    @apply w-[2px] h-[3px];
 }
 
 ::-webkit-scrollbar-track {
     /* border-radius: 100vh; */
-    background: #fff;
+    @apply bg-[#fff];
 }
 
 ::-webkit-scrollbar-thumb {
-    background: $main-color;
+    @apply bg-primary;
 }
 
 a {
@@ -22,6 +19,10 @@ a {
 
 textarea {
     @apply resize-none;
+}
+
+.social:hover {
+    @apply transition-all duration-200 translate-y-[-3px];
 }
 
 input {
@@ -33,7 +34,7 @@ input {
     @apply bg-primary text-white py-[12px] px-[16px] rounded-[32px] flex items-center justify-center;
 }
 .secondbtn {
-    @apply text-primary hover:text-white relative py-[12px] px-[16px] rounded-[32px] bg-trans isolation-auto z-10 border border-primary before:absolute before:w-full before:transition-all before:duration-500 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-primary before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-500;
+    @apply text-primary hover:text-white relative py-[12px] px-[16px] rounded-[32px] bg-trans text-center isolation-auto z-10 border border-primary before:absolute before:w-full before:transition-all before:duration-500 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-primary before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-500;
 }
 // .secondbtn:hover {
 //     @apply bg-primary text-white border border-primary transition-all duration-300;
@@ -67,7 +68,7 @@ select option[disabled] {
     @apply flex min-h-[60px] border border-[#F7F8F8] rounded-[33px] ps-4 bg-white;
 }
 .countreyinput input {
-    @apply border border-[#F7F8F8] w-full rounded-e-[33px] focus:outline-none bg-white;
+    @apply w-full rounded-e-[33px] focus:outline-none bg-white;
 }
 
 .select-dropdown {

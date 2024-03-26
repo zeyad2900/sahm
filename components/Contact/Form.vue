@@ -5,6 +5,7 @@
                 <form>
                     <div class="grid grid-cols-2 gap-[124px] mb-[50px]">
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
+                            <!-- name input -->
                             <vee-field name="name" v-slot="{ field, meta }">
                                 <div class="maininput">
                                     <input v-bind="field" :class="meta.touched && !meta.valid ? ' !border-danger' : ''" :placeholder="$t('INPUTS.name')" type="text" />
@@ -12,6 +13,7 @@
                                 <VeeErrorMessage name="name" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </vee-field>
 
+                            <!-- email input -->
                             <VeeField name="email" v-slot="{ field, meta }">
                                 <div class="maininput">
                                     <input v-bind="field" :class="meta.touched && !meta.valid ? ' !border-danger' : ''" :placeholder="$t('INPUTS.email')" type="text" />
@@ -19,6 +21,7 @@
                                 <VeeErrorMessage name="email" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
 
+                            <!-- text -->
                             <div class="flex flex-col justify-around h-[200px]">
                                 <div class="flex items-center gap-3">
                                     <nuxt-icon class="text-secondary" name="contact/phone" filled />
@@ -29,15 +32,16 @@
                                     <p class="text-secondary">{{ email.value }}</p>
                                 </div>
                                 <div class="flex justify-start items-center">
-                                    <a :href="facebook.value" class="ml-3"><nuxt-icon class="text-3xl" name="footer/Facebook" filled /></a>
-                                    <a :href="youtube.value" class="ml-3"><nuxt-icon class="text-3xl" name="footer/YouTube" filled /></a>
-                                    <a :href="instagram.value" class="ml-3"><nuxt-icon class="text-3xl" name="footer/Instagram" filled /></a>
-                                    <a :href="twitter.value" class="ml-3"><nuxt-icon class="text-3xl" name="footer/Twitter" filled /></a>
+                                    <a :href="facebook.value" class="social ml-3"><nuxt-icon class="text-3xl" name="footer/Facebook" filled /></a>
+                                    <a :href="youtube.value" class="social ml-3"><nuxt-icon class="text-3xl" name="footer/YouTube" filled /></a>
+                                    <a :href="instagram.value" class="social ml-3"><nuxt-icon class="text-3xl" name="footer/Instagram" filled /></a>
+                                    <a :href="twitter.value" class="social ml-3"><nuxt-icon class="text-3xl" name="footer/Twitter" filled /></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
+                            <!-- phone input -->
                             <div>
                                 <div class="countreyinput" :class="errors.phone ? ' !border-danger' : ''">
                                     <GlobalePhoneInput />
@@ -45,6 +49,7 @@
                                 <VeeErrorMessage name="phone" class="text-danger" as="span" />
                             </div>
 
+                            <!-- subjict input -->
                             <VeeField name="subject" v-slot="{ field, meta }">
                                 <div class="maininput">
                                     <textarea v-bind="field" class="!h-[250px]" :class="meta.touched && !meta.valid ? ' !border-danger' : ''" :placeholder="$t('INPUTS.subject')" type="text" />
@@ -89,8 +94,6 @@ const instagram = props.items.find((ele) => {
     return ele.key === "instagram";
 });
 
-const generalStore = useMyGeneralsStore();
-const { phonelength } = storeToRefs(generalStore);
 import { configure } from "vee-validate";
 import * as yup from "yup";
 import { useToast } from "vue-toastification";
@@ -109,31 +112,24 @@ const schema = ref(
         phone: yup
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
-            .min(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value }))
-            .max(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value })),
+            .test("phone", (value, ctx) => {
+                if (value.length == ctx.parent.phone_code.phone_number_limit) {
+                    return true;
+                } else {
+                    return ctx.createError({
+                        message: i18n.t("ERROR.passwordlength", { length: ctx.parent.phone_code.phone_number_limit }),
+                        path: "phone",
+                    });
+                }
+            }),
         email: yup
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.email") }))
             .test("email", i18n.t("ERROR.valid", { name: i18n.t("INPUTS.email") }), (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
         subject: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.subject") })),
+        phone_code: yup.mixed(),
     })
 );
-
-watch(phonelength, (newValue, oldValue) => {
-    schema.value = yup.object().shape({
-        name: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.name") })),
-        phone: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
-            .min(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue }))
-            .max(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue })),
-        email: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.email") }))
-            .test("email", i18n.t("ERROR.valid", { name: i18n.t("INPUTS.email") }), (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
-        subject: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.subject") })),
-    });
-});
 
 const toast = useToast();
 const buttonLoading = ref(false);
@@ -141,12 +137,12 @@ const baseURL = useRuntimeConfig().public.baseURL;
 
 async function handleSubmit(values, actions) {
     buttonLoading.value = true;
-    await $fetch(`${baseURL}contact-us`, {
+    await $fetch(`${baseURL}website/contact-us`, {
         method: "POST",
         body: {
             full_name: values.name,
             email: values.email,
-            phone_code: values.phone_code,
+            phone_code: values.phone_code.phone_code,
             phone: values.phone,
             title: values.subject,
             content: values.subject,

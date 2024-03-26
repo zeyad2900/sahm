@@ -5,6 +5,7 @@
                 <form>
                     <div class="grid grid-cols-2 gap-[124px] mb-[50px]">
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
+                            <!-- jop input  -->
                             <VeeField name="jop" v-slot="{ field, meta }">
                                 <div class="select-dropdown">
                                     <select v-bind="field" as="select" :class="meta.touched && !meta.valid ? ' !border-danger' : ''">
@@ -14,14 +15,14 @@
                                     <VeeErrorMessage name="jop" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                                 </div>
                             </VeeField>
-
+                            <!-- name input  -->
                             <vee-field name="name" v-slot="{ field, meta }">
                                 <div class="maininput">
                                     <input v-bind="field" :class="meta.touched && !meta.valid ? ' !border-danger' : ''" :placeholder="$t('INPUTS.name')" type="text" />
                                 </div>
                                 <VeeErrorMessage name="name" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </vee-field>
-
+                            <!-- phone inpu t  -->
                             <div>
                                 <div class="countreyinput" :class="errors.phone ? ' !border-danger' : ''">
                                     <GlobalePhoneInput />
@@ -30,7 +31,9 @@
                             </div>
                         </div>
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
+                            <!-- options -->
                             <div class="grid grid-cols-2 gap-5">
+                                <!-- country -->
                                 <VeeField name="country" v-slot="{ field, meta }">
                                     <div class="select-dropdown">
                                         <select as="select" v-bind="field" :class="meta.touched && !meta.valid ? ' !border-danger' : ''">
@@ -40,6 +43,7 @@
                                         <VeeErrorMessage name="country" v-if="meta.touched && !meta.valid" class="text-danger text-sm" as="span" />
                                     </div>
                                 </VeeField>
+                                <!-- city -->
                                 <VeeField name="city" v-slot="{ field, meta }">
                                     <div class="select-dropdown">
                                         <select as="select" v-bind="field" :class="meta.touched && !meta.valid ? ' !border-danger' : ''">
@@ -51,6 +55,7 @@
                                 </VeeField>
                             </div>
 
+                            <!-- email -->
                             <VeeField name="email" v-slot="{ field, meta }">
                                 <div class="maininput">
                                     <input v-bind="field" :class="meta.touched && !meta.valid ? ' !border-danger' : ''" :placeholder="$t('INPUTS.email')" type="text" />
@@ -58,6 +63,7 @@
                                 <VeeErrorMessage name="email" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                             </VeeField>
 
+                            <!-- file input -->
                             <VeeField name="file" type="file" v-slot="{ field, meta }">
                                 <div class="maininput relative">
                                     <input type="text" :placeholder="$t('INPUTS.cv')" disabled :class="meta.touched && !meta.valid ? ' !border-danger' : ''" />
@@ -71,12 +77,14 @@
                             </VeeField>
                         </div>
                     </div>
+                    <!-- message input -->
                     <VeeField name="message" v-slot="{ field, meta }">
                         <div class="maininput mb-[32px]">
                             <textarea v-bind="field" :class="meta.touched && !meta.valid ? ' !border-danger' : ''" :placeholder="$t('INPUTS.message')" class="!h-[250px]" />
                             <VeeErrorMessage name="message" v-if="meta.touched && !meta.valid" class="text-danger" as="span" />
                         </div>
                     </VeeField>
+
                     <button :disabled="buttonLoading" :class="buttonLoading ? '!bg-[#05cc838d]' : '!bg-primary'" class="mainbtn ms-auto !px-[31px]">
                         <span v-if="!buttonLoading">{{ $t("TITLES.usertitle") }}</span>
                         <GlobaleButtonLoader v-if="buttonLoading" />
@@ -89,7 +97,7 @@
 
 <script setup>
 const generalStore = useMyGeneralsStore();
-const { countries, jops, cities, phonelength } = storeToRefs(generalStore);
+const { countries, jops, cities } = storeToRefs(generalStore);
 
 const i18n = useI18n();
 import { configure } from "vee-validate";
@@ -113,35 +121,24 @@ const schema = ref(
         phone: yup
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
-            .min(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value }))
-            .max(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value })),
+            .test("phone", (value, ctx) => {
+                if (value.length == ctx.parent.phone_code.phone_number_limit) {
+                    return true;
+                } else {
+                    return ctx.createError({
+                        message: i18n.t("ERROR.passwordlength", { length: ctx.parent.phone_code.phone_number_limit }),
+                        path: "phone",
+                    });
+                }
+            }),
         message: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.message") })),
         jop: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.jop") })),
         country: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.country") })),
         city: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.city") })),
         file: yup.mixed().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.cv") })),
+        phone_code: yup.mixed(),
     })
 );
-
-watch(phonelength, (newValue, oldValue) => {
-    schema.value = yup.object().shape({
-        name: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.name") })),
-        email: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.email") }))
-            .test("email", i18n.t("ERROR.valid", { name: i18n.t("INPUTS.email") }), (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
-        phone: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
-            .min(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue }))
-            .max(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue })),
-        message: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.message") })),
-        jop: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.jop") })),
-        country: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.country") })),
-        city: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.city") })),
-        file: yup.mixed().required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.cv") })),
-    });
-});
 
 const toast = useToast();
 const buttonLoading = ref(false);
@@ -150,7 +147,7 @@ const baseURL = useRuntimeConfig().public.baseURL;
 async function handleSubmit(values, actions) {
     buttonLoading.value = true;
     console.log(values);
-    await $fetch(`${baseURL}join-to-us`, {
+    await $fetch(`${baseURL}website/join-to-us`, {
         method: "POST",
         body: {
             job_id: values.jop,
@@ -158,10 +155,11 @@ async function handleSubmit(values, actions) {
             city_id: values.city,
             full_name: values.name,
             email: values.email,
-            phone_code: values.phone_code,
+            phone_code: values.phone_code.phone_code,
             phone: values.phone,
             content: values.subject,
             cv: values.file,
+            content: "value",
         },
         headers: {
             "Accept-Language": i18n.locale.value,

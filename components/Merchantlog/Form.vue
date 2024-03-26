@@ -6,6 +6,8 @@
                 <form>
                     <div class="grid grid-cols-2 gap-[124px] mb-[50px]">
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
+
+                            <!-- shop name input -->
                             <VeeField name="merchantname" v-slot="{ field, meta }">
                                 <div>
                                     <p class="text-light mb-[17px]">{{ $t("LABELS.shopname") }}</p>
@@ -15,7 +17,8 @@
                                     <VeeErrorMessage v-if="meta.touched && !meta.valid" name="merchantname" as="span" class="!text-danger" />
                                 </div>
                             </VeeField>
-
+                            
+                            <!-- phone input  -->
                             <div>
                                 <p class="text-light mb-[17px]">{{ $t("INPUTS.phone") }}</p>
                                 <div class="countreyinput" :class="errors.phone ? ' !border-danger' : ''">
@@ -24,6 +27,7 @@
                                 <VeeErrorMessage name="phone" class="text-danger" as="span" />
                             </div>
 
+                            <!-- password input  -->
                             <VeeField name="password" v-slot="{ field, meta }">
                                 <div>
                                     <p class="text-light mb-[17px]">{{ $t("LABELS.password") }}</p>
@@ -35,6 +39,7 @@
                             </VeeField>
                         </div>
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
+                            <!-- user name input -->
                             <VeeField name="username" v-slot="{ field, meta }">
                                 <div>
                                     <p class="text-light mb-[17px]">{{ $t("LABELS.name") }}</p>
@@ -45,6 +50,7 @@
                                 </div>
                             </VeeField>
 
+                            <!-- shop phone input -->
                             <div>
                                 <p class="text-light mb-[17px]">{{ $t("LABELS.shopphone") }}</p>
                                 <div class="countreyinput" :class="errors.shopphone ? ' !border-danger' : ''">
@@ -53,6 +59,7 @@
                                 <VeeErrorMessage name="shopphone" class="text-danger" as="span" />
                             </div>
 
+                            <!-- confirm password input -->
                             <VeeField name="repassword" v-slot="{ field, meta }">
                                 <div>
                                     <p class="text-light mb-[17px]">{{ $t("LABELS.repassword") }}</p>
@@ -75,8 +82,6 @@
 </template>
 
 <script setup>
-const generalStore = useMyGeneralsStore();
-const { phonelength } = storeToRefs(generalStore);
 const i18n = useI18n();
 import { configure } from "vee-validate";
 import { useToast } from "vue-toastification";
@@ -96,13 +101,29 @@ const schema = ref(
         phone: yup
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
-            .min(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value.toString() }))
-            .max(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value.toString() })),
+            .test("phone", (value, ctx) => {
+                if (value.length == ctx.parent.phone_code.phone_number_limit) {
+                    return true;
+                } else {
+                    return ctx.createError({
+                        message: i18n.t("ERROR.passwordlength", { length: ctx.parent.phone_code.phone_number_limit }),
+                        path: "phone",
+                    });
+                }
+            }),
         shopphone: yup
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.shopphone") }))
-            .min(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value.toString() }))
-            .max(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value.toString() })),
+            .test("shopphone", (value, ctx) => {
+                if (value.length == ctx.parent.phone_code.phone_number_limit) {
+                    return true;
+                } else {
+                    return ctx.createError({
+                        message: i18n.t("ERROR.passwordlength", { length: ctx.parent.phone_code.phone_number_limit }),
+                        path: "shopphone",
+                    });
+                }
+            }),
         password: yup
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.password") }))
@@ -111,53 +132,30 @@ const schema = ref(
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.repassword") }))
             .oneOf([yup.ref("password")], i18n.t("ERROR.confirmpass")),
+        phone_code: yup.string().required(),
+        shop_phone_code: yup.string().required(),
     })
 );
-
-watch(phonelength, (newValue, oldValue) => {
-    schema.value = yup.object().shape({
-        merchantname: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.shopname") })),
-        username: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.name") })),
-        phone: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
-            .min(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue }))
-            .max(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue })),
-        shopphone: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.shopphone") }))
-            .min(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue }))
-            .max(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue })),
-        password: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.password") }))
-            .min(9, i18n.t("ERROR.passwordlength", { name: i18n.t("LABELS.password"), length: "9" })),
-        repassword: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.repassword") }))
-            .oneOf([yup.ref("password")], i18n.t("ERROR.confirmpass")),
-    });
-});
 
 const toast = useToast();
 const buttonLoading = ref(false);
 const baseURL = useRuntimeConfig().public.baseURL;
 
 async function handleSubmit(values, actions) {
-    console.log(values);
     buttonLoading.value = true;
-    await $fetch(`${baseURL}contact-us`, {
+    await $fetch(`${baseURL}website/contact-us`, {
         method: "POST",
         body: {
             type: "trader",
             full_name: values.username,
-            phone_code: values.phone_code,
+            phone_code: values.phone_code.phone_code,
             phone: values.phone,
             password: values.password,
             password_confirmation: values.repassword,
             shop_name: values.merchantname,
-            shop_phone_code: values.phone_code,
+            shop_phone_code: values.shop_phone_code.phone_code,
             shop_phone: values.shopphone,
+            content: "value",
         },
         headers: {
             "Accept-Language": i18n.locale.value,
@@ -174,5 +172,3 @@ async function handleSubmit(values, actions) {
         });
 }
 </script>
-
-<style></style>

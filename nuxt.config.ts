@@ -5,8 +5,7 @@ export default defineNuxtConfig({
     css: ["~/assets/css/main.scss"],
     modules: [
         "nuxt-headlessui",
-        "nuxt-headlessui",
-        "@nuxt/image",
+        '@nuxt/image',
         "@pinia/nuxt",
         [
             "@vee-validate/nuxt",
@@ -60,7 +59,8 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            baseURL: "https://sahm.phpv8.aait-d.com/api/website/",
+            baseURL: "https://web.sahamksa.com/api/",
+            orderURL:"https://web.sahamksa.com/api/website/get_order?order_id="
         },
     },
     ssr: true,

@@ -1,5 +1,5 @@
 <template>
-    <a :href="whatsApp.value" class="z-[2000] fixed bottom-[60px] end-[35px]">
+    <a :href="whatsApp.value" id="animatedElement" class="z-30 fixed bottom-[60px] end-[35px]">
         <nuxt-icon class="text-6xl" name="home/whatsapp" filled />
     </a>
 </template>
@@ -15,4 +15,17 @@ const whatsApp = props.items.find((ele) => {
 });
 </script>
 
-<style></style>
+<style>
+#animatedElement {
+    animation: moveUpDown 4s ease-in-out infinite;
+}
+@keyframes moveUpDown {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(20px);
+    }
+}
+</style>

@@ -2,7 +2,7 @@
     <section class="home_intro min-h-[85vh]">
         <div class="w-full h-full z-10 absolute">
             <div class="gradiant w-full h-full absolute"></div>
-            <nuxt-img format="webp" class="w-full h-full object-cover" src="/merchant.png" />
+            <NuxtImg format="webp" class="w-full h-full object-cover" src="/merchant.webp" alt="merchant" />
         </div>
         <div class="text-white flex flex-col items-center gap-7 w-[537px] px-5 mt-32 lg:px-0 z-10">
             <h1 class="font-semibold text-3xl md:text-[50px] animate__animated animate__fadeInLeft">{{ $t("TITLES.merchanttitle") }}</h1>
@@ -10,8 +10,3 @@
         </div>
     </section>
 </template>
-
-<script setup>
-</script>
-
-<style></style>

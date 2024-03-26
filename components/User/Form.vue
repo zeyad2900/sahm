@@ -6,6 +6,8 @@
                 <form>
                     <div class="grid grid-cols-2 gap-[124px] mb-[50px]">
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
+
+                            <!-- usetr name input  -->
                             <VeeField name="username" v-slot="{ field, meta }">
                                 <div>
                                     <p class="text-light mb-[17px]">{{ $t("LABELS.name") }}</p>
@@ -16,6 +18,7 @@
                                 </div>
                             </VeeField>
 
+                            <!-- password input  -->
                             <VeeField name="password" v-slot="{ field, meta }">
                                 <div>
                                     <p class="text-light mb-[17px]">{{ $t("LABELS.password") }}</p>
@@ -25,6 +28,8 @@
                                     <VeeErrorMessage v-if="meta.touched && !meta.valid" name="password" as="span" class="!text-danger" />
                                 </div>
                             </VeeField>
+
+                            <!-- confirm password  -->
                             <VeeField name="repassword" v-slot="{ field, meta }">
                                 <div>
                                     <p class="text-light mb-[17px]">{{ $t("LABELS.repassword") }}</p>
@@ -34,8 +39,12 @@
                                     <VeeErrorMessage v-if="meta.touched && !meta.valid" name="repassword" as="span" class="!text-danger" />
                                 </div>
                             </VeeField>
+
                         </div>
+
                         <div class="space-y-[24px] col-span-2 lg:col-span-1">
+
+                            <!-- email input  -->
                             <VeeField name="email" v-slot="{ field, meta }">
                                 <div>
                                     <p class="text-light mb-[17px]">{{ $t("INPUTS.email") }}</p>
@@ -46,6 +55,7 @@
                                 </div>
                             </VeeField>
 
+                            <!-- phone input  -->
                             <div>
                                 <p class="text-light mb-[17px]">{{ $t("INPUTS.phone") }}</p>
                                 <div class="countreyinput" :class="errors.phone ? ' !border-danger' : ''">
@@ -66,8 +76,6 @@
 </template>
 
 <script setup>
-const generalStore = useMyGeneralsStore();
-const { phonelength } = storeToRefs(generalStore);
 const i18n = useI18n();
 import { configure } from "vee-validate";
 import { useToast } from "vue-toastification";
@@ -90,8 +98,16 @@ const schema = ref(
         phone: yup
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
-            .min(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value }))
-            .max(phonelength.value, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: phonelength.value })),
+            .test("phone", (value, ctx) => {
+                if (value.length == ctx.parent.phone_code.phone_number_limit) {
+                    return true;
+                } else {
+                    return ctx.createError({
+                        message: i18n.t("ERROR.passwordlength", { length: ctx.parent.phone_code.phone_number_limit }),
+                        path: "phone",
+                    });
+                }
+            }),
         password: yup
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.password") }))
@@ -100,31 +116,9 @@ const schema = ref(
             .string()
             .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.repassword") }))
             .oneOf([yup.ref("password")], i18n.t("ERROR.confirmpass")),
+        phone_code: yup.mixed(),
     })
 );
-
-watch(phonelength, (newValue, oldValue) => {
-    schema.value = yup.object().shape({
-        email: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.email") }))
-            .test("email", i18n.t("ERROR.valid", { name: i18n.t("INPUTS.email") }), (value) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)),
-        username: yup.string().required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.name") })),
-        phone: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("INPUTS.phone") }))
-            .min(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue }))
-            .max(newValue, i18n.t("ERROR.passwordlength", { name: i18n.t("INPUTS.phone"), length: newValue })),
-        password: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.password") }))
-            .min(9, i18n.t("ERROR.passwordlength", { name: i18n.t("LABELS.password"), length: "9" })),
-        repassword: yup
-            .string()
-            .required(i18n.t("ERROR.isRequired", { name: i18n.t("LABELS.repassword") }))
-            .oneOf([yup.ref("password")], i18n.t("ERROR.confirmpass")),
-    });
-});
 
 const toast = useToast();
 const buttonLoading = ref(false);
@@ -133,16 +127,17 @@ const baseURL = useRuntimeConfig().public.baseURL;
 async function handleSubmit(values, actions) {
     console.log(values);
     buttonLoading.value = true;
-    await $fetch(`${baseURL}contact-us`, {
+    await $fetch(`${baseURL}website/contact-us`, {
         method: "POST",
         body: {
             type: "user",
             full_name: values.username,
             email: values.email,
-            phone_code: values.phone_code,
+            phone_code: values.phone_code.phone_code,
             phone: values.phone,
             password: values.password,
             password_confirmation: values.repassword,
+            content: "value",
         },
         headers: {
             "Accept-Language": i18n.locale.value,

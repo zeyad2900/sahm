@@ -19,4 +19,3 @@ const { locale } = useI18n();
 const { data } = await useApi("settings");
 </script>
 
-<style></style>

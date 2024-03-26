@@ -46,7 +46,6 @@ export default {
             montserrat: ["Montserrat", "sans-serif"],
             din: ["Din", "sans-serif"],
         },
-        extend: {},
         container: {
             center: true,
             padding: {

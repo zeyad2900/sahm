@@ -3,6 +3,3 @@
     <UserForm />
 </template>
 
-<script setup></script>
-
-<style></style>

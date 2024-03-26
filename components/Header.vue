@@ -1,10 +1,11 @@
 <template>
-    <header class="absolute top-0 flex items-center justify-center start-0 w-full z-[500] h-[150px] bg-transparent text-white">
+    <header class="absolute top-0 flex items-center justify-center start-0 w-full z-[500] h-[150px] bg-transparent" :class="route.fullPath.includes('order') ? 'text-text' : 'text-white'">
         <div class="container flex items-center justify-between">
             <!-- logo -->
             <NuxtLink :to="localePath('/')">
                 <div class="w-32">
-                    <NuxtImg :src="headerLogo.value" placeholder="/logo.png" class="w-full h-full" />
+                    <NuxtImg v-if="route.fullPath.includes('order')" src="/logob.png" class="w-full h-full" alt="logo" />
+                    <NuxtImg v-else src="/logo.png" class="w-full h-full" alt="logo" />
                 </div>
             </NuxtLink>
             <!-- llinks -->
@@ -42,6 +43,8 @@
                 </div>
                 <!-- small header button -->
                 <button
+                    type="button"
+                    aria-label="name"
                     @click="
                         () => {
                             smallHeader = true;
@@ -67,11 +70,7 @@ const props = defineProps({
         required: true,
     },
 });
-
-const headerLogo = props.items.find((ele) => {
-    return ele.key === "header_logo";
-});
-
+const route = useRoute();
 const localePath = useLocalePath();
 const { locale, setLocale } = useI18n();
 const smallHeader = ref(false);
