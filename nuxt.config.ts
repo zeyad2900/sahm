@@ -57,6 +57,9 @@ export default defineNuxtConfig({
             autoprefixer: {},
         },
     },
+    build: {
+        transpile: ['vue-toastification']
+    },
     runtimeConfig: {
         public: {
             baseURL: "https://web.sahamksa.com/api/",
