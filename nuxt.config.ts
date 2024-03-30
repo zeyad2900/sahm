@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     css: ["~/assets/css/main.scss"],
     modules: [
         "nuxt-headlessui",
-        '@nuxt/image',
+        "@nuxt/image",
         "@pinia/nuxt",
         [
             "@vee-validate/nuxt",
@@ -58,14 +58,14 @@ export default defineNuxtConfig({
         },
     },
     build: {
-        transpile: ['vue-toastification']
+        transpile: ["vue-toastification"],
     },
     runtimeConfig: {
         public: {
             baseURL: "https://web.sahamksa.com/api/",
-            orderURL:"https://web.sahamksa.com/api/website/get_order?order_id="
+            orderURL: "https://web.sahamksa.com/api/website/get_order?order_id=",
         },
     },
-    ssr: true,
+    ssr: false,
     spaLoadingTemplate: false,
 });
