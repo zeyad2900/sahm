@@ -2,7 +2,7 @@
     <section class="home_intro min-h-[90vh]">
         <div class="w-full h-full z-10 absolute">
             <div class="gradiant w-full h-full absolute z-[1000]"></div>
-            <NuxtImg class="w-full h-full object-cover" format="webp" :src="items.image_path" placeholder="layout.png" alt="homepage" />
+            <NuxtImg class="w-full h-full object-cover" format="webp" :src="items.image_path" placeholder="contact.png" alt="homepage" />
         </div>
         <div class="text-white flex flex-col items-center gap-7 w-full max-w-[537px] px-5 lg:px-0 z-10">
             <h1 class="font-extrabold text-3xl md:text-[64px] text-center leading-[70px] animate__animated animate__fadeInLeft">{{ items.title }}</h1>
