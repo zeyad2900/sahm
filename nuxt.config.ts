@@ -66,6 +66,6 @@ export default defineNuxtConfig({
             orderURL: "https://web.sahamksa.com/api/website/get_order?order_id=",
         },
     },
-    ssr: false,
+    ssr: true,
     spaLoadingTemplate: false,
 });
