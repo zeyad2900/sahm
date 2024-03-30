@@ -19,13 +19,16 @@ const whatsApp = props.items.find((ele) => {
 #animatedElement {
     animation: moveUpDown 4s ease-in-out infinite;
 }
+#animatedElement:hover {
+    animation-play-state: paused;
+}
 @keyframes moveUpDown {
     0%,
     100% {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(20px);
+        transform: translateY(10px);
     }
 }
 </style>
